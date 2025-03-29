@@ -1,20 +1,20 @@
 const events = {};
 
-function publish(eventType){
+function publish(eventType, ...params){
     if ( !events[eventType]){
         return;
     }
 
-    events[eventType].forEach(listener => listener());
+    events[eventType].forEach(listener => listener.apply(null, params));
 
 }
 
-function subscribe(eventType, listener){
+function subscribe(eventType, eventListener){
     if ( !events[eventType]){
         events[eventType] = [];
     }
 
-    events[eventType].push(listener);
+    events[eventType].push(eventListener);
 
 }
 

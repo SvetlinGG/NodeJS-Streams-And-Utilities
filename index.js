@@ -1,16 +1,36 @@
+const messageBroker = require('./messageBroker')
 
-const http = require('http');
+function messageReceivedHandler(){
+    console.log('Message is received');
+    
+}
 
-const port = 4000;
+function logMessage(){
+    console.log('Message is logged!');
+    
+}
 
-const server = http.createServer((req, res)  =>{
+messageBroker.subscribe('message_received', messageReceivedHandler);
+messageBroker.subscribe('message_received', logMessage);
+messageBroker.subscribe('message_deleted', logMessage);
 
-    res.write('Hello Server');
+messageBroker.publish('message_received');
+messageBroker.publish('message_received');
+messageBroker.publish('message_deleted');
 
 
-    res.end();
+// const http = require('http');
 
-})
+// const port = 4000;
 
-server.listen(port);
-console.log(`Server is listen on http://localhost:${port}...`);
+// const server = http.createServer((req, res)  =>{
+
+//     res.write('Hello Server');
+
+
+//     res.end();
+
+// })
+
+// server.listen(port);
+// console.log(`Server is listen on http://localhost:${port}...`);
